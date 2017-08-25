@@ -20,7 +20,10 @@ class Cat < ApplicationRecord
   foreign_key: :user_id,
   class_name: :User
 
-  
+  has_many :requesters,
+  through: :rental_requests,
+  source: :requester
+
   def age
     time_ago_in_words(birth_date)
   end

@@ -24,5 +24,6 @@
   </tr>
   <% @cat.rental_requests.order('start_date').each do |req| %>
     <%= render 'req_tr', req: req %>
+    <%= @cat.requesters.first.user_name %>
   <% end %>
 </table>

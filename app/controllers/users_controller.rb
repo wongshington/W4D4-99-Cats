@@ -12,10 +12,8 @@ class UsersController < ApplicationController
 
     if @user.save
       login_user(@user)
-      # render :
     else
       flash.now[:errors] = @user.errors.full_messages
-      # redirect_to :new
     end
   end
 

@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+
+before_action :require_no_user, only: [:new, :create]
+
   def new
     render :new
   end
@@ -9,10 +12,10 @@ class SessionsController < ApplicationController
       params[:user][:password]
     )
     if user.nil?
-      render json: 'Credentials are wrong'
+      flash.now[:errors] = ['Incorrect credentials']
     else
-      session[:session_token] = user.reset_session_token!
-      redirecct_to cats_url
+      login_user(user)
+      redirect_to cats_url
     end
   end
 

@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  before_action :require_no_user
+
   def new
     render :new
   end
@@ -8,10 +11,11 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: @user
+      login_user(@user)
+      # render :
     else
       flash.now[:errors] = @user.errors.full_messages
-      redirect_to :new
+      # redirect_to :new
     end
   end
 

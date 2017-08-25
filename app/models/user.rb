@@ -4,6 +4,9 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6, allow_nil: true}
   after_initialize :ensure_session_token
 
+  has_many :cats
+
+attr_reader :password
 
   def ensure_session_token
     self.session_token ||= SecureRandom.urlsafe_base64
@@ -17,7 +20,7 @@ class User < ApplicationRecord
 
   def password=(password)
     @password = password
-    self.password_digest = BCrpt::Password.create(password)
+    self.password_digest = BCrypt::Password.create(password)
   end
 
   def is_password?(password)
